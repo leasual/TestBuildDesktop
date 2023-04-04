@@ -32,7 +32,7 @@ class CustomCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => (onCardTap == null) ? null : onCardTap!(),
       child: SizedBox(
-        width: 180.0,
+        width: 179.5,
         child: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 15),
           child: Card(

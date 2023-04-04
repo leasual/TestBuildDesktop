@@ -9,6 +9,7 @@ class AddScheduleHeader extends StatelessWidget {
     super.key,
     required this.groupFormKey,
     required this.scheduleNameController,
+    required this.delayController,
     required this.countController,
     required this.groups,
     // required this.viewModel,
@@ -16,6 +17,7 @@ class AddScheduleHeader extends StatelessWidget {
 
   final GlobalKey<FormState> groupFormKey;
   final TextEditingController scheduleNameController;
+  final TextEditingController delayController;
   final TextEditingController countController;
   final Map<String, Group> groups;
   // final AddScheduleViewModel viewModel;
@@ -45,6 +47,19 @@ class AddScheduleHeader extends StatelessWidget {
                           if (textValue == null ||
                               textValue.isEmpty) {
                             return 'Schedule name is required!';
+                          }
+                          return null;
+                        }),
+                    CustomInputField(
+                        textInputType: TextInputType.number,
+                        action: TextInputAction.done,
+                        controller: delayController,
+                        labelText: '',
+                        hintText: 'Delay duration',
+                        validator: (textValue) {
+                          if (textValue == null ||
+                              textValue.isEmpty) {
+                            return 'Delay duration is required!';
                           }
                           return null;
                         }),

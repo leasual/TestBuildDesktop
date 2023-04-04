@@ -14,6 +14,7 @@ _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       total: json['total'] as int?,
       start: json['start'] as bool?,
       onOff: json['onOff'] as bool?,
+      delay: json['delay'] as int?,
     );
 
 Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'total': instance.total,
       'start': instance.start,
       'onOff': instance.onOff,
+      'delay': instance.delay,
     };

@@ -15,15 +15,20 @@ class ScheduleViewModel extends _$ScheduleViewModel {
     return null;
   }
 
-  Future<void> startTaskSchedule(Map<String, Task> taskList, Task? task) async {
-    logger.d('start task= $task');
-    if(task?.start == false) {
+  Future<void> startTaskSchedule() async {
+    final repository = ref.read(scheduleRepositoryProvider);
+    final taskList = await repository.getAllSchedules();
+    logger.d('start task= $taskList');
+    final startTasks =  taskList.values.where((element) => element.start == true).toList();
+    if(startTasks.isEmpty) {
       return;
     }
-    if(task != null && taskList.isNotEmpty && task.progress! < task.total!) {
-      final on = await ref.read(groupRepositoryProvider).setGroupState(id: task.groupId!, on: task.onOff!);
+    final task = startTasks.elementAt(0);
+    if(task.progress! < task.total!) {
+      final on = await ref.read(groupRepositoryProvider).setGroupState(id: task.groupId!, on: !task.onOff!);
       logger.d('on= $on');
-      final off = await ref.read(groupRepositoryProvider).setGroupState(id: task.groupId!, on: !task.onOff!);
+      await Future.delayed(Duration(seconds: task.delay!));
+      final off = await ref.read(groupRepositoryProvider).setGroupState(id: task.groupId!, on: task.onOff!);
       logger.d('off= $off');
 
       final progress = task.progress! + 1;
@@ -31,11 +36,12 @@ class ScheduleViewModel extends _$ScheduleViewModel {
       taskList[task.taskId!] = current;
       if(task.progress! == task.total! - 1) {
         current = current.copyWith(start: false);
+        taskList[current.taskId!] = current;
       }
       ref.read(sharedPreferencesProvider).setString('task', taskToJson(taskList.values.toList()));
       await ref.read(scheduleViewModelProvider.notifier).getAllSchedules();
-      await Future.delayed(const Duration(seconds: 2));
-      await startTaskSchedule(taskList, current);
+      await Future.delayed(const Duration(seconds: 1));
+      startTaskSchedule();
     }
   }
 
@@ -50,6 +56,10 @@ class ScheduleViewModel extends _$ScheduleViewModel {
     final repository = ref.read(scheduleRepositoryProvider);
       state = await AsyncValue.guard(() => repository.deleteSchedule(taskId));
       state = await AsyncValue.guard(() => repository.getAllSchedules());
+  }
+
+  void saveSchedule(Map<String, Task> taskList) {
+    ref.read(sharedPreferencesProvider).setString('task', taskToJson(taskList.values.toList()));
   }
 
   Future<dynamic> setGroupState(String id, bool onOff) async {

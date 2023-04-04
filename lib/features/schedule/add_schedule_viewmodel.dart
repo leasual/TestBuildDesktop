@@ -18,9 +18,9 @@ class AddScheduleViewModel extends _$AddScheduleViewModel {
   }
 
   Future<void> addSchedule(
-      String scheduleName, String count, String groupId) async {
+      String scheduleName, String count, String groupId, String delay) async {
     final repository = ref.read(scheduleRepositoryProvider);
-    state = await AsyncValue.guard(() => repository.addSchedule(scheduleName, count, groupId));
+    state = await AsyncValue.guard(() => repository.addSchedule(scheduleName, count, groupId, delay));
   }
 
   Future<void> getAllGroups() async {

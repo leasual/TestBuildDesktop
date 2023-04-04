@@ -27,12 +27,14 @@ class AddSchedulePage extends ConsumerStatefulWidget {
 class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
   final TextEditingController scheduleNameController = TextEditingController();
   final TextEditingController countController = TextEditingController();
+  final TextEditingController delayController = TextEditingController();
   final groupFormKey = GlobalKey<FormState>();
   Map<String, Group> groups = {};
 
   @override
   void initState() {
     super.initState();
+    delayController.text = '1';
     Future(
         () => ref.read(addScheduleViewModelProvider.notifier).getAllGroups());
   }
@@ -73,21 +75,23 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                       color: Colors.black,
                       size: 30,
                     ),
-                    onPressed: () => {
-                          if (groupFormKey.currentState?.validate() == true)
-                            {
-                              if (groups.values
-                                  .where((element) => element.selected == true)
-                                  .toList()
-                                  .isNotEmpty)
-                                {
-                                  viewModel.addSchedule(
-                                      scheduleNameController.text,
-                                      countController.text,
-                                      groups.values.elementAt(0).id ?? '')
-                                }
+                    onPressed: () {
+                      if (groupFormKey.currentState?.validate() == true) {
+                        final selectGroup = groups.values
+                            .where((element) => element.selected == true)
+                            .toList();
+                        if (selectGroup.isNotEmpty) {
+                          String selectedGroupId = '';
+                          groups.forEach((key, value) {
+                            if (value.id == selectGroup[0].id) {
+                              selectedGroupId = key;
                             }
-                        })
+                          });
+                          viewModel.addSchedule(scheduleNameController.text,
+                              countController.text, selectedGroupId, delayController.text);
+                        }
+                      }
+                    })
               ],
             ),
             body: SafeArea(
@@ -100,6 +104,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                             child: AddScheduleHeader(
                                 groupFormKey: groupFormKey,
                                 scheduleNameController: scheduleNameController,
+                                delayController: delayController,
                                 countController: countController,
                                 groups: groups),
                           ),
@@ -117,6 +122,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                                   groupFormKey: groupFormKey,
                                   scheduleNameController:
                                       scheduleNameController,
+                                  delayController: delayController,
                                   countController: countController,
                                   groups: groups)),
                           SliverToBoxAdapter(

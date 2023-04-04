@@ -27,6 +27,7 @@ mixin _$Task {
   int? get total => throw _privateConstructorUsedError;
   bool? get start => throw _privateConstructorUsedError;
   bool? get onOff => throw _privateConstructorUsedError;
+  int? get delay => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $TaskCopyWith<$Res> {
       int? progress,
       int? total,
       bool? start,
-      bool? onOff});
+      bool? onOff,
+      int? delay});
 }
 
 /// @nodoc
@@ -68,6 +70,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? total = freezed,
     Object? start = freezed,
     Object? onOff = freezed,
+    Object? delay = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -98,6 +101,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.onOff
           : onOff // ignore: cast_nullable_to_non_nullable
               as bool?,
+      delay: freezed == delay
+          ? _value.delay
+          : delay // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -115,7 +122,8 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       int? progress,
       int? total,
       bool? start,
-      bool? onOff});
+      bool? onOff,
+      int? delay});
 }
 
 /// @nodoc
@@ -134,6 +142,7 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
     Object? total = freezed,
     Object? start = freezed,
     Object? onOff = freezed,
+    Object? delay = freezed,
   }) {
     return _then(_$_Task(
       name: freezed == name
@@ -164,6 +173,10 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
           ? _value.onOff
           : onOff // ignore: cast_nullable_to_non_nullable
               as bool?,
+      delay: freezed == delay
+          ? _value.delay
+          : delay // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -178,7 +191,8 @@ class _$_Task implements _Task {
       this.progress,
       this.total,
       this.start,
-      this.onOff});
+      this.onOff,
+      this.delay});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
 
@@ -196,10 +210,12 @@ class _$_Task implements _Task {
   final bool? start;
   @override
   final bool? onOff;
+  @override
+  final int? delay;
 
   @override
   String toString() {
-    return 'Task(name: $name, groupId: $groupId, taskId: $taskId, progress: $progress, total: $total, start: $start, onOff: $onOff)';
+    return 'Task(name: $name, groupId: $groupId, taskId: $taskId, progress: $progress, total: $total, start: $start, onOff: $onOff, delay: $delay)';
   }
 
   @override
@@ -214,13 +230,14 @@ class _$_Task implements _Task {
                 other.progress == progress) &&
             (identical(other.total, total) || other.total == total) &&
             (identical(other.start, start) || other.start == start) &&
-            (identical(other.onOff, onOff) || other.onOff == onOff));
+            (identical(other.onOff, onOff) || other.onOff == onOff) &&
+            (identical(other.delay, delay) || other.delay == delay));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, name, groupId, taskId, progress, total, start, onOff);
+      runtimeType, name, groupId, taskId, progress, total, start, onOff, delay);
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +261,8 @@ abstract class _Task implements Task {
       final int? progress,
       final int? total,
       final bool? start,
-      final bool? onOff}) = _$_Task;
+      final bool? onOff,
+      final int? delay}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
@@ -262,6 +280,8 @@ abstract class _Task implements Task {
   bool? get start;
   @override
   bool? get onOff;
+  @override
+  int? get delay;
   @override
   @JsonKey(ignore: true)
   _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;

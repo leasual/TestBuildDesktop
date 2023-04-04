@@ -23,11 +23,26 @@ class GroupPage extends ConsumerStatefulWidget {
 
 class _GroupPageState extends ConsumerState<GroupPage> {
   Map<String, Group> groups = {};
+  bool addListener = false;
+
+  void listenRouteChange() {
+    logger.d('back result location= ${GoRouter.of(context).location}');
+    if (GoRouter.of(context).location.contains(AppRoute.main.name)) {
+      Future(
+              () => ref.read(groupViewModelProvider.notifier).getGroups());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     Future(() => ref.read(groupViewModelProvider.notifier).getGroups());
+  }
+
+  @override
+  void dispose() {
+    GoRouter.of(context).removeListener(listenRouteChange);
+    super.dispose();
   }
 
   @override
@@ -57,7 +72,14 @@ class _GroupPageState extends ConsumerState<GroupPage> {
                     backgroundColor: Colors.white,
                     appBar: DeconzAppBar(
                       showAddAction: true,
-                      onTap: () => {context.goNamed(AppRoute.addGroup.name)},
+                      onTap: () => {
+                        if (!addListener)
+                          {
+                            GoRouter.of(context).addListener(listenRouteChange),
+                            addListener = true
+                          },
+                        context.goNamed(AppRoute.addGroup.name)
+                      },
                     ),
                     body: CustomScrollView(slivers: [
                       SliverGrid(

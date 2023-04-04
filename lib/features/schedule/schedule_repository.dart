@@ -17,7 +17,7 @@ class ScheduleRepository extends BaseRepository {
 
   Future<Map<String, Task>> getAllSchedules() async {
     final task = sharedPreferences.getString('task');
-    logger.d('get task= $task');
+    // logger.d('get task= $task');
     final taskMap = <String, Task>{};
     if(task != null && task.isNotEmpty) {
       taskFromJson(task).forEach((element) {
@@ -26,7 +26,7 @@ class ScheduleRepository extends BaseRepository {
           taskMap[element.taskId!] = element;
         }
       });
-      logger.d('get task taskMap= $taskMap');
+      // logger.d('get task taskMap= $taskMap');
     }
     return taskMap;
   }
@@ -51,7 +51,7 @@ class ScheduleRepository extends BaseRepository {
     return 'Delete schedule [$taskName] success';
   }
 
-  Future<String> addSchedule(String scheduleName, String count, String groupId) async {
+  Future<String> addSchedule(String scheduleName, String count, String groupId, String delay) async {
     final task = sharedPreferences.getString('task');
     logger.d('tasks= $task');
     final taskMap = <String, Task>{};
@@ -68,12 +68,19 @@ class ScheduleRepository extends BaseRepository {
     } catch (e) {
       logger.e('e= $e');
     }
+    int delayTime = 1;
+    try {
+      delayTime = int.parse(delay);
+    } catch(e) {
+      logger.e('e= $e');
+    }
     final newTask = Task(
         name: scheduleName,
         groupId: groupId,
         taskId: DateTime.now().microsecondsSinceEpoch.toString(),
         progress: 0,
         total: total,
+        delay: delayTime,
         start: false,
         onOff: false);
     taskMap[groupId] = newTask;

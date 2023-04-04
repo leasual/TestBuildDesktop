@@ -22,6 +22,7 @@ class Task with _$Task {
     int? total,
     bool? start,
     bool? onOff,
+    int? delay,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

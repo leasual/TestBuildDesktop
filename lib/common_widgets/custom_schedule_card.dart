@@ -31,7 +31,7 @@ class CustomScheduleCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => (onCardTap == null) ? null : onCardTap!(),
       child: SizedBox(
-        width: 180.0,
+        width: 179.5,
         child: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 15),
           child: Card(
@@ -58,17 +58,17 @@ class CustomScheduleCard extends StatelessWidget {
                           onPressed: () =>
                               (onDeleteTap == null) ? null : onDeleteTap!()),
                       IconButton(
+                          disabledColor: Colors.grey[500],
                           splashRadius: 25,
                           icon: start == true ? const Icon(EvaIcons.pauseCircleOutline, color: yellowColor) : const Icon(EvaIcons.playCircleOutline),
                           iconSize: 28,
-                          onPressed: () =>
-                          (onStartTap == null) ? null : onStartTap!()),
+                          onPressed: (onStartTap == null || progress == total) ? null : () => onStartTap!()),
 
                     ],
                   ),
                   CircularPercentIndicator(
-                    radius: 60.0,
-                    lineWidth: 20.0,
+                    radius: 50.0,
+                    lineWidth: 15.0,
                     percent: progress / total,
                     center: Text("${progress.toInt()}/${total.toInt()}"),
                     progressColor: yellowColor,

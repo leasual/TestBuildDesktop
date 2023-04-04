@@ -62,7 +62,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               SmartDialog.showToast(data);
             });
           }
-          logger.d('data= $taskList');
+          // logger.d('data= $taskList');
           return SafeArea(
               child: Scaffold(
                   backgroundColor: Colors.white,
@@ -143,7 +143,8 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                                         }
                                       }
                                     }
-                                    viewModel.startTaskSchedule(taskList, taskList[currentTask.taskId!]);
+                                    viewModel.saveSchedule(taskList);
+                                    viewModel.startTaskSchedule();
                                   })
                                 },
                               );

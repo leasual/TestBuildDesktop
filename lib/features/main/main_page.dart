@@ -12,7 +12,7 @@ import '../device/device_page.dart';
 import '../group/group_page.dart';
 import '../settings/settings_page.dart';
 
-final tabSelectedIndexProvider = StateProvider.autoDispose<int>((ref) => 1);
+final tabSelectedIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({
