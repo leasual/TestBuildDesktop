@@ -25,12 +25,12 @@ Future<void> main() async {
     // must add this to wait for ready
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1200, 800),
+      size: Size(800, 640),
       center: true,
       backgroundColor: Colors.white,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
-      minimumSize: Size(1200, 800),
+      minimumSize: Size(800, 640),
       title: ''
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {

@@ -26,10 +26,10 @@ class MainPage extends ConsumerStatefulWidget {
 class _MainPageState extends ConsumerState<MainPage> {
   List<Widget> pages = [];
   List<TabBarItem> tabItems = [
-    TabBarItem(
-      icon: const Icon(EvaIcons.homeOutline),
-      title: const Text('Home'),
-    ),
+    // TabBarItem(
+    //   icon: const Icon(EvaIcons.homeOutline),
+    //   title: const Text('Home'),
+    // ),
     TabBarItem(
       icon: const Icon(EvaIcons.cubeOutline),
       title: const Text('Group'),
@@ -50,7 +50,7 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   void initState() {
-    pages.add(const HomePage());
+    // pages.add(const HomePage());
     pages.add(const GroupPage());
     pages.add(const DevicePage());
     pages.add(const SchedulePage());
